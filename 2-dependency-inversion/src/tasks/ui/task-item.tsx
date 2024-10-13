@@ -1,4 +1,9 @@
-import { UserSelect } from "../../user/ui/user-select";
+import { ReactNode } from "react";
+
+export type SelectParams = {
+  userId?: string;
+  onChangeUserId: (ownerId: string) => void;
+};
 
 export const TaskItem = ({
   title,
@@ -7,6 +12,7 @@ export const TaskItem = ({
   onToggleDone,
   onChangeOwner,
   ownerId,
+  renderSelect,
 }: {
   title: string;
   done: boolean;
@@ -14,6 +20,7 @@ export const TaskItem = ({
   onChangeOwner: (ownerId: string) => void;
   onToggleDone: () => void;
   onDelete: () => void;
+  renderSelect(params: SelectParams): ReactNode;
 }) => {
   return (
     <div style={{ display: "flex", gap: "10px", padding: "10px" }}>
@@ -22,7 +29,10 @@ export const TaskItem = ({
         done
       </label>
       <button onClick={() => onDelete()}>Delete task</button>
-      <UserSelect userId={ownerId} onChangeUserId={onChangeOwner} />
+      {renderSelect({
+        userId: ownerId,
+        onChangeUserId: onChangeOwner,
+      })}
       <div>{title}</div>
     </div>
   );

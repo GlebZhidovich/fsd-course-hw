@@ -1,8 +1,13 @@
-import { TaskItem } from "./task-item";
+import { TaskItem, SelectParams } from "./task-item";
 import { useTasks } from "../model/use-tasks";
 import { CreateTaskForm } from "./create-task-from";
+import { ReactNode } from "react";
 
-export function TasksList() {
+type TasksListProps = {
+  renderSelect(params: SelectParams): ReactNode;
+};
+
+export function TasksList({ renderSelect }: TasksListProps) {
   const { addTask, removeTask, tasks, toggleCheckTask, updateOwner } =
     useTasks();
 
@@ -11,6 +16,7 @@ export function TasksList() {
       <CreateTaskForm onCreate={addTask} />
       {tasks.map((task) => (
         <TaskItem
+          renderSelect={renderSelect}
           key={task.id}
           done={task.done}
           title={task.title}
