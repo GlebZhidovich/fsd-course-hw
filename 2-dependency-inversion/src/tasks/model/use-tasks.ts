@@ -8,11 +8,17 @@ type Task = {
   ownerId?: string;
 };
 
-const STORAGE_KEY = "tasks";
-export function useTasks() {
-  const [tasks, setTasks] = useState<Task[]>(() =>
-    getFromStorage(STORAGE_KEY, [])
-  );
+export type TasksService = {
+  saveTasks(tasks: Task[]): void;
+  getTasks(): Task[];
+};
+
+export type Params = {
+  tasksService: TasksService;
+};
+
+export function useTasks({ tasksService }: Params) {
+  const [tasks, setTasks] = useState<Task[]>(tasksService.getTasks);
 
   const addTask = (value: string) => {
     setTasks((tasks) => [
@@ -40,7 +46,7 @@ export function useTasks() {
   };
 
   useEffect(() => {
-    saveToStorage(STORAGE_KEY, tasks);
+    tasksService.saveTasks(tasks);
   }, [tasks]);
 
   return {

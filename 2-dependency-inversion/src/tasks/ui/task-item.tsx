@@ -10,17 +10,13 @@ export const TaskItem = ({
   done,
   onDelete,
   onToggleDone,
-  onChangeOwner,
-  ownerId,
-  renderSelect,
+  select,
 }: {
   title: string;
   done: boolean;
-  ownerId?: string;
-  onChangeOwner: (ownerId: string) => void;
   onToggleDone: () => void;
   onDelete: () => void;
-  renderSelect(params: SelectParams): ReactNode;
+  select: ReactNode;
 }) => {
   return (
     <div style={{ display: "flex", gap: "10px", padding: "10px" }}>
@@ -29,10 +25,7 @@ export const TaskItem = ({
         done
       </label>
       <button onClick={() => onDelete()}>Delete task</button>
-      {renderSelect({
-        userId: ownerId,
-        onChangeUserId: onChangeOwner,
-      })}
+      {select}
       <div>{title}</div>
     </div>
   );

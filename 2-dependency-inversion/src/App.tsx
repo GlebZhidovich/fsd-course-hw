@@ -1,5 +1,5 @@
 import { TasksList } from "./tasks/ui/tasks-list";
-import { saveToStorage, getFromStorage } from "./lib/storage";
+import { TasksService } from "./lib/TasksService";
 import { UserSelect, UserSelectProps } from "./user/ui/user-select";
 
 export function App() {
@@ -7,7 +7,7 @@ export function App() {
 
   return (
     <>
-      <TasksList renderSelect={renderSelect} />
+      <TasksList tasksService={TasksService} renderSelect={renderSelect} />
     </>
   );
 }
